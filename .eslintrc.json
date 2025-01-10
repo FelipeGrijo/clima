@@ -1,0 +1,28 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": "airbnb-base",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "rules": {
+    "no-console": "off",
+    "import/extensions": ["error", "ignorePackages"],
+    "max-len": [
+      "error",
+      {
+        "code": 160,
+        "ignoreComments": true
+      }
+    ],
+    "object-curly-newline": [
+      "error",
+      {
+        "ObjectPattern": { "multiline": true, "minProperties": 8 }
+      }
+    ]
+  }
+}
