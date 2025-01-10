@@ -116,6 +116,11 @@ function setTheme() {
   return isNight;
 }
 
+function updateFavicon(emoji) {
+  const favicon = document.querySelector('head > link[rel=icon]');
+  favicon.href = `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'><text y='1em' font-size='100'>${emoji}</text></svg>`;
+}
+
 function updateTitle({ temperature, weatherDescription }) {
   document.title = `Clima | ${temperature}°C - ${weatherDescription}`;
 }
@@ -133,6 +138,7 @@ function updateUI({ locationData, weather, isNight }) {
   document.querySelector('.wind').textContent = `${Math.round(weather.wind_speed_10m)} km/h`;
 
   updateTitle({ temperature, weatherDescription });
+  updateFavicon(emoji);
 }
 
 function saveToLocalStorage({ locationData, weather }) {
