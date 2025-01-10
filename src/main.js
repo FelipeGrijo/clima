@@ -1,15 +1,23 @@
 const CACHE_KEY = 'weatherData';
-const CACHE_DURATION = 30 * 60 * 1000; // 30 minutos em milissegundos
+const refreshButton = document.querySelector('.refresh-button');
+let isUpdating = false;
+
+function getCountryNameInLocalLanguage(countryCode) {
+  const userLanguage = navigator.language || navigator.userLanguage;
+  const displayNames = new Intl.DisplayNames([userLanguage], { type: 'region' });
+  return displayNames.of(countryCode);
+}
 
 async function getLocation() {
   try {
     const response = await fetch('https://www.geolocation-db.com/json/');
     const data = await response.json();
+    const country = getCountryNameInLocalLanguage(data.country_code);
     return {
       latitude: data.latitude,
       longitude: data.longitude,
       city: data.city,
-      country: data.country_name,
+      country,
     };
   } catch (error) {
     console.error('Erro ao obter localização:', error);
@@ -31,14 +39,12 @@ async function getWeather(latitude, longitude) {
 }
 
 function getWeatherEmoji(weatherCode, isNight) {
-  // Emojis específicos para noite
   const nightSpecific = {
     0: '🌕', // Clear sky
     1: '🌙', // Mainly clear
     2: '🌙', // Partly cloudy with moon
   };
 
-  // Emojis padrão (dia ou condições que não mudam)
   const defaultEmojis = {
     0: '☀️', // Clear sky
     1: '🌤️', // Mainly clear
@@ -66,12 +72,10 @@ function getWeatherEmoji(weatherCode, isNight) {
     99: '⛈️', // Thunderstorm with heavy hail
   };
 
-  // Se for noite e existir um emoji específico para noite, use-o
   if (isNight && nightSpecific[weatherCode]) {
     return nightSpecific[weatherCode];
   }
 
-  // Caso contrário, use o emoji padrão
   return defaultEmojis[weatherCode] || '❓';
 }
 
@@ -102,7 +106,7 @@ function getWeatherDescription(weatherCode) {
     96: 'Tempestade com granizo leve',
     99: 'Tempestade com granizo forte',
   };
-  return descriptions[weatherCode] || 'Desconhecido';
+  return descriptions[weatherCode] || `Desconhecido (${weatherCode})`;
 }
 
 function setTheme() {
@@ -112,13 +116,23 @@ function setTheme() {
   return isNight;
 }
 
+function updateTitle(emoji, temperature, description) {
+  document.title = `Clima | ${emoji} ${temperature}°C - ${description}`;
+}
+
 function updateUI(locationData, weather, isNight) {
+  const emoji = getWeatherEmoji(weather.weather_code, isNight);
+  const temp = Math.round(weather.temperature_2m);
+  const desc = getWeatherDescription(weather.weather_code);
+
   document.querySelector('.location').textContent = `${locationData.city}, ${locationData.country}`;
-  document.querySelector('.temperature').textContent = `${Math.round(weather.temperature_2m)}°C`;
-  document.querySelector('.weather-icon').textContent = getWeatherEmoji(weather.weather_code, isNight);
-  document.querySelector('.description').textContent = getWeatherDescription(weather.weather_code);
+  document.querySelector('.temperature').textContent = `${temp}°C`;
+  document.querySelector('.weather-icon').textContent = emoji;
+  document.querySelector('.description').textContent = desc;
   document.querySelector('.humidity').textContent = `${Math.round(weather.relative_humidity_2m)}%`;
   document.querySelector('.wind').textContent = `${Math.round(weather.wind_speed_10m)} km/h`;
+
+  updateTitle(emoji, temp, desc);
 }
 
 function saveToLocalStorage(locationData, weather) {
@@ -135,34 +149,46 @@ function getFromLocalStorage() {
   if (!data) return null;
 
   const parsedData = JSON.parse(data);
-  const now = Date.now();
-
-  if (now - parsedData.timestamp > CACHE_DURATION) {
-    localStorage.removeItem(CACHE_KEY);
-    return null;
-  }
-
   return parsedData;
 }
 
-async function initialize() {
+function setUpdatingState(updating) {
+  isUpdating = updating;
+  refreshButton.classList.toggle('updating', updating);
+  refreshButton.disabled = updating;
+}
+
+async function updateWeather(useCache = true) {
+  if (isUpdating) return;
+
+  setUpdatingState(true);
   const isNight = setTheme();
 
-  // Tenta carregar dados do cache primeiro
-  const cachedData = getFromLocalStorage();
-  if (cachedData) {
-    updateUI(cachedData.locationData, cachedData.weather, isNight);
-  }
-
-  // Atualiza os dados em segundo plano
-  const locationData = await getLocation();
-  if (locationData) {
-    const weather = await getWeather(locationData.latitude, locationData.longitude);
-    if (weather) {
-      updateUI(locationData, weather, isNight);
-      saveToLocalStorage(locationData, weather);
+  try {
+    // Verifica o cache primeiro
+    if (useCache) {
+      const cachedData = getFromLocalStorage();
+      if (cachedData) {
+        updateUI(cachedData.locationData, cachedData.weather, isNight);
+      }
     }
+
+    // Atualiza os dados
+    const locationData = await getLocation();
+    if (locationData) {
+      const weather = await getWeather(locationData.latitude, locationData.longitude);
+      if (weather) {
+        updateUI(locationData, weather, isNight);
+        saveToLocalStorage(locationData, weather);
+      }
+    }
+  } catch (error) {
+    // TODO: Mostrar mensagem de erro pro usuário
+    console.error('Erro ao atualizar o clima:', error);
+  } finally {
+    setUpdatingState(false);
   }
 }
 
-initialize();
+refreshButton.addEventListener('click', () => updateWeather(false));
+updateWeather(true);
