@@ -37,3 +37,13 @@ Abra o VSCode
 ```sh
 code .
 ```
+
+## Dev
+
+```sh
+npm run dev
+```
+
+```sh
+http://localhost:5173
+```
