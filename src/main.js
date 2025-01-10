@@ -9,6 +9,8 @@ function getCountryNameInLocalLanguage(countryCode) {
 }
 
 async function getLocation() {
+  // Note: https://www.geolocation-db.com/documentation
+
   try {
     const response = await fetch('https://www.geolocation-db.com/json/');
     const data = await response.json();
@@ -26,10 +28,18 @@ async function getLocation() {
 }
 
 async function getWeather({ latitude, longitude }) {
+  // Note: https://open-meteo.com/en/docs
+
   try {
-    const response = await fetch(
-      `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&timezone=auto`, // eslint-disable-line
-    );
+    const params = new URLSearchParams({
+      latitude,
+      longitude,
+      current: 'temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m',
+      timezone: 'auto',
+    });
+
+    const response = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`);
+
     const data = await response.json();
     return data.current;
   } catch (error) {
