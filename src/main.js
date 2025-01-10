@@ -25,7 +25,7 @@ async function getLocation() {
   }
 }
 
-async function getWeather(latitude, longitude) {
+async function getWeather({ latitude, longitude }) {
   try {
     const response = await fetch(
       `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&timezone=auto`, // eslint-disable-line
@@ -38,7 +38,7 @@ async function getWeather(latitude, longitude) {
   }
 }
 
-function getWeatherEmoji(weatherCode, isNight) {
+function getWeatherEmoji({ weatherCode, isNight }) {
   const nightSpecific = {
     0: '🌕', // Clear sky
     1: '🌙', // Mainly clear
@@ -116,26 +116,26 @@ function setTheme() {
   return isNight;
 }
 
-function updateTitle(emoji, temperature, description) {
-  document.title = `Clima | ${emoji} ${temperature}°C - ${description}`;
+function updateTitle({ temperature, weatherDescription }) {
+  document.title = `Clima | ${temperature}°C - ${weatherDescription}`;
 }
 
-function updateUI(locationData, weather, isNight) {
-  const emoji = getWeatherEmoji(weather.weather_code, isNight);
-  const temp = Math.round(weather.temperature_2m);
-  const desc = getWeatherDescription(weather.weather_code);
+function updateUI({ locationData, weather, isNight }) {
+  const emoji = getWeatherEmoji({ weatherCode: weather.weather_code, isNight });
+  const temperature = Math.round(weather.temperature_2m);
+  const weatherDescription = getWeatherDescription(weather.weather_code);
 
   document.querySelector('.location').textContent = `${locationData.city}, ${locationData.country}`;
-  document.querySelector('.temperature').textContent = `${temp}°C`;
+  document.querySelector('.temperature').textContent = `${temperature}°C`;
   document.querySelector('.weather-icon').textContent = emoji;
-  document.querySelector('.description').textContent = desc;
+  document.querySelector('.weather-description').textContent = weatherDescription;
   document.querySelector('.humidity').textContent = `${Math.round(weather.relative_humidity_2m)}%`;
   document.querySelector('.wind').textContent = `${Math.round(weather.wind_speed_10m)} km/h`;
 
-  updateTitle(emoji, temp, desc);
+  updateTitle({ temperature, weatherDescription });
 }
 
-function saveToLocalStorage(locationData, weather) {
+function saveToLocalStorage({ locationData, weather }) {
   const data = {
     locationData,
     weather,
@@ -169,17 +169,17 @@ async function updateWeather(useCache = true) {
     if (useCache) {
       const cachedData = getFromLocalStorage();
       if (cachedData) {
-        updateUI(cachedData.locationData, cachedData.weather, isNight);
+        updateUI({ locationData: cachedData.locationData, weather: cachedData.weather, isNight });
       }
     }
 
     // Atualiza os dados
     const locationData = await getLocation();
     if (locationData) {
-      const weather = await getWeather(locationData.latitude, locationData.longitude);
+      const weather = await getWeather({ latitude: locationData.latitude, longitude: locationData.longitude });
       if (weather) {
-        updateUI(locationData, weather, isNight);
-        saveToLocalStorage(locationData, weather);
+        updateUI({ locationData, weather, isNight });
+        saveToLocalStorage({ locationData, weather });
       }
     }
   } catch (error) {
