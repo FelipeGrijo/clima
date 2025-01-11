@@ -28,7 +28,7 @@ async function getLocation() {
     try {
       const proxyResponse = await fetch(PROXY_API_URL);
       const data = await proxyResponse.json();
-      const locationData = data.geodb || data.cf;
+      const locationData = (data.geodb && data.geodb?.latitude !== 'Not found') || data.cf;
       const country = formatCountryName(locationData.country_code);
 
       return {
