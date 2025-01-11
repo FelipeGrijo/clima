@@ -140,7 +140,10 @@ function updateUI({ locationData, weather, isNight }) {
   const temperature = Math.round(weather.temperature_2m);
   const weatherDescription = getWeatherDescription(weather.weather_code);
 
-  document.querySelector('.location').textContent = `${locationData.city}, ${locationData.country}`;
+  // Note: Quando o geolocation-db encontra a cidade, retorna o nome com uma vírgula, quando for null, retorna uma string vazia
+  const city = locationData.city ? `${locationData.city},` : '';
+
+  document.querySelector('.location').textContent = `${city} ${locationData.country}`.trim();
   document.querySelector('.temperature').textContent = `${temperature}°C`;
   document.querySelector('.weather-icon').textContent = emoji;
   document.querySelector('.weather-description').textContent = weatherDescription;
