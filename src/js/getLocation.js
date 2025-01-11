@@ -34,7 +34,7 @@ async function getLocation() {
       return {
         latitude: locationData.latitude,
         longitude: locationData.longitude,
-        city: locationData.city,
+        city: locationData.city || locationData.state,
         country,
       };
     } catch (err) {
