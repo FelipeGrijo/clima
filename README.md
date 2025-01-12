@@ -12,7 +12,7 @@ Necessário ter:
 - [Node](https://nodejs.org/en/download)
 - [VSCode](https://code.visualstudio.com/download)
 
-_Instale as extensões recomendadas no vscode pra ativar o eslint e prettier_
+⚠️ _Instale as extensões recomendadas no vscode pra ativar o eslint e prettier. Talvez seja necessário reiniciar o vscode._
 
 Clone o repositório
 
@@ -47,3 +47,20 @@ npm run dev
 ```sh
 http://localhost:5173
 ```
+
+---
+
+## TODO
+
+- [ ] Melhorar layout, usar flexbox ou grid
+- [ ] Add botão [pin](https://fonts.google.com/icons?icon.query=pin)
+  - [ ] Ao clicar abre modal
+  - [ ] Usar o [open-meteo](https://open-meteo.com/en/docs/geocoding-api#name=Maca%C3%A9) pra localização. Ex.: [Macaé](https://geocoding-api.open-meteo.com/v1/get?id=3458266)
+  - [ ] Criar campo de busca, ao buscar nome, preencher com bandeira do país, cidade e estado. Usar idioma do navegador.
+  - [ ] Add coordenadas como campo adicional opcional
+  - [ ] Salvar cidade no localstorage
+  - [ ] Mostrar erros pro usuário, quando a requisição for bloqueada por um adblock e que a localização inicial é aproximado, podendo usar a localização exata no botão de busca.
+- [ ] Add gráfico com clima do dia
+- [ ] Add clima pros próximos dias
+- [ ] 100 pontos em tudo no [Lighthouse](https://developer.chrome.com/docs/lighthouse/overview?hl=pt-br)
+- [ ] Webapp
