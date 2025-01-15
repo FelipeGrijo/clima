@@ -1,3 +1,4 @@
+// Note: https://www.geolocation-db.com/documentation
 const GEODB_API_URL = 'https://www.geolocation-db.com/json/';
 const PROXY_API_URL = '/api';
 
@@ -8,8 +9,6 @@ function formatCountryName(countryCode) {
 }
 
 async function getLocation() {
-  // Note: https://www.geolocation-db.com/documentation
-
   try {
     const response = await fetch(GEODB_API_URL);
     const data = await response.json();
@@ -18,7 +17,7 @@ async function getLocation() {
     return {
       latitude: data.latitude,
       longitude: data.longitude,
-      city: data.city,
+      city: data.city || data.state,
       country,
     };
   } catch (error) {
@@ -27,8 +26,7 @@ async function getLocation() {
     // Note: Tenta obter a localização usando o proxy caso algum adblock bloqueie o acesso ao Geolocation-DB
     try {
       const proxyResponse = await fetch(PROXY_API_URL);
-      const data = await proxyResponse.json();
-      const locationData = (data.geodb && data.geodb?.latitude !== 'Not found') || data.cf;
+      const locationData = await proxyResponse.json();
       const country = formatCountryName(locationData.country_code);
 
       return {

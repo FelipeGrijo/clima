@@ -1,6 +1,4 @@
 async function getWeather({ latitude, longitude }) {
-  // Note: https://open-meteo.com/en/docs
-
   try {
     const params = new URLSearchParams({
       latitude,
@@ -9,6 +7,7 @@ async function getWeather({ latitude, longitude }) {
       timezone: 'auto',
     });
 
+    // Note: https://open-meteo.com/en/docs
     const response = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`);
 
     const data = await response.json();
