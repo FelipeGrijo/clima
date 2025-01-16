@@ -3,6 +3,7 @@ import getWeather from './getWeather.js';
 import setTheme from './setTheme.js';
 import { saveToLocalStorage, getFromLocalStorage } from './localStorage.js';
 import updateUI from './updateUI.js';
+import './modal.js';
 
 const refreshButton = document.querySelector('.refresh-button');
 let isUpdating = false;
