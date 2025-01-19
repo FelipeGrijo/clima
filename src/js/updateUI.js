@@ -15,10 +15,10 @@ function updateUI({ locationData, weather, isNight }) {
   const temperature = Math.round(weather.temperature_2m);
   const weatherDescription = getWeatherDescription(weather.weather_code);
 
-  // Note: Quando o geolocation-db encontra a cidade, retorna o nome com uma vírgula, quando for null, retorna uma string vazia
-  const city = locationData.city ? `${locationData.city},` : '';
+  // Note: Retorna o valor que não for nulo, vazio ou indefinido. Mostrará a cidade e o país, separados por vírgula ou somente um dos dois, caso um deles não exista.
+  const displayText = [locationData.city, locationData.country].filter(Boolean).join(', ');
 
-  document.querySelector('.location').textContent = `${city} ${locationData.country}`.trim();
+  document.querySelector('.location').textContent = displayText;
   document.querySelector('.temperature').textContent = `${temperature}°C`;
   document.querySelector('.weather-icon').textContent = emoji;
   document.querySelector('.weather-description').textContent = weatherDescription;

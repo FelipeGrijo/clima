@@ -17,9 +17,8 @@ openModalButton.addEventListener('click', () => {
 saveModalButton.addEventListener('click', () => {
   modalOverlay.classList.remove('active');
   const city = citySearchInput.value.trim();
-  const country = citySearchInput.getAttribute('data-country');
-  const [latitude, longitude] = coordinatesInput.value.split(',');
-  console.log('Localização salva:', city, country, latitude, longitude);
+  const country = citySearchInput.getAttribute('data-country').trim();
+  const [latitude, longitude] = coordinatesInput.value.split(',').map((coord) => coord.trim());
 
   saveToLocalStorage({
     locationData: {
@@ -38,45 +37,64 @@ modalOverlay.addEventListener('click', (event) => {
   }
 });
 
-async function searchCities(query) {
+const suggestionTemplate = ({ displayText, city, country, latitude, longitude }) => /* html */ `
+  <div tabIndex="0" class="suggestion" data-name="${city}" data-country="${country}" data-latitude="${latitude}" data-longitude="${longitude}">
+    ${displayText}
+  </div>
+`;
+
+function clearSuggestions() {
   suggestionsContainer.innerHTML = '';
-  if (query.length < 3) {
-    suggestionsContainer.style.display = 'none';
+  suggestionsContainer.style.display = 'none';
+}
+
+async function searchCities(query) {
+  if (query.trim().length < 3) {
+    clearSuggestions();
     return;
   }
 
   try {
     const response = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${query}`);
-    const data = await response.json();
-    console.log(data);
 
-    if (data.results) {
-      console.log(data.results.map((result) => result.name));
-      suggestionsContainer.style.display = 'block';
-      data.results.forEach((result) => {
-        const suggestionItem = document.createElement('div');
-        const cityName = result.admin1 ? `${result.name} - ${result.admin1}` : result.name;
-        suggestionItem.textContent = cityName;
-        suggestionItem.classList.add('suggestion');
-        suggestionItem.addEventListener('click', () => {
-          console.log('Cidade selecionada:', result);
-          citySearchInput.value = result.name;
-          coordinatesInput.value = `${result.latitude},${result.longitude}`;
-          citySearchInput.setAttribute('data-location', `${result.latitude},${result.longitude}`);
-          citySearchInput.setAttribute('data-country', result.country);
-          suggestionsContainer.innerHTML = '';
-          suggestionsContainer.style.display = 'none';
-        });
-        suggestionsContainer.appendChild(suggestionItem);
-      });
-    } else {
-      suggestionsContainer.style.display = 'none';
+    if (!response.ok) {
+      throw new Error('Erro ao buscar cidades.', response.statusText);
     }
+
+    const data = await response.json();
+
+    if (!data?.results || data.results.length === 0) {
+      clearSuggestions();
+      return;
+    }
+
+    suggestionsContainer.style.display = 'block';
+
+    const suggestions = data.results.map((result) => ({
+      displayText: result.admin1 ? `${result.name} - ${result.admin1}` : result.name,
+      city: result.name || '',
+      country: result.country || '',
+      latitude: result.latitude || '',
+      longitude: result.longitude || '',
+    }));
+
+    suggestionsContainer.innerHTML = suggestions.map(suggestionTemplate).join('');
   } catch (error) {
     console.error('Erro ao buscar cidades:', error);
-    suggestionsContainer.style.display = 'none';
+    clearSuggestions();
   }
 }
+
+suggestionsContainer.addEventListener('click', (event) => {
+  if (event.target.classList.contains('suggestion')) {
+    const { name, country, latitude, longitude } = event.target.dataset;
+    citySearchInput.value = name;
+    citySearchInput.setAttribute('data-country', country);
+    coordinatesInput.value = `${latitude},${longitude}`;
+
+    clearSuggestions();
+  }
+});
 
 let inputTimeout = null;
 citySearchInput.addEventListener('input', async (event) => {
