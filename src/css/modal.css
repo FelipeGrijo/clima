@@ -86,10 +86,20 @@
 .suggestion {
   padding: 10px;
   cursor: pointer;
+  display: flex;
 }
 
 .suggestion:hover {
   background-color: #f4f4f4;
+}
+
+span.suggestion-location {
+  flex-grow: 1;
+  pointer-events: none;
+}
+
+.suggestion .fi {
+  pointer-events: none;
 }
 
 .suggestions::-webkit-scrollbar {

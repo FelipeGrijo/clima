@@ -37,9 +37,10 @@ modalOverlay.addEventListener('click', (event) => {
   }
 });
 
-const suggestionTemplate = ({ displayText, city, country, latitude, longitude }) => /* html */ `
+const suggestionTemplate = ({ displayText, city, country, countryCode, latitude, longitude }) => /* html */ `
   <div tabIndex="0" class="suggestion" data-name="${city}" data-country="${country}" data-latitude="${latitude}" data-longitude="${longitude}">
-    ${displayText}
+    <span class="fi fi-${countryCode.toLowerCase()}" title="${country}"></span>
+    <span class="suggestion-location">${displayText}</span>
   </div>
 `;
 
@@ -74,6 +75,7 @@ async function searchCities(query) {
       displayText: result.admin1 ? `${result.name} - ${result.admin1}` : result.name,
       city: result.name || '',
       country: result.country || '',
+      countryCode: result.country_code || 'xx',
       latitude: result.latitude || '',
       longitude: result.longitude || '',
     }));
