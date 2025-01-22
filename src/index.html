@@ -10,13 +10,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.3.2/css/flag-icons.min.css" />
     <title>Clima</title>
     <script>
-      function setTheme() {
+      (() => {
         const hours = new Date().getHours();
         const isNight = hours < 6 || hours > 18;
         document.documentElement.setAttribute('data-theme', isNight ? 'night' : 'day');
-        return isNight;
-      }
-      setTheme();
+      })();
     </script>
   </head>
   <body>
