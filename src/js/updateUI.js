@@ -27,6 +27,18 @@ function updateUI({ locationData, weather, isNight }) {
 
   updateTitle({ temperature, weatherDescription });
   updateFavicon(emoji);
+
+  const citySearchInput = document.getElementById('citySearch');
+  const coordinatesInput = document.getElementById('coordinates');
+
+  if (citySearchInput.value === '') {
+    citySearchInput.value = displayText;
+    citySearchInput.setAttribute('data-country', locationData.country);
+  }
+
+  if (coordinatesInput.value === '') {
+    coordinatesInput.value = `${locationData.latitude},${locationData.longitude}`;
+  }
 }
 
 export default updateUI;
