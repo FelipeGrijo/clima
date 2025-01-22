@@ -9,12 +9,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.3.2/css/flag-icons.min.css" />
     <title>Clima</title>
+    <script>
+      (() => {
+        const hours = new Date().getHours();
+        const isNight = hours < 6 || hours > 18;
+        document.documentElement.setAttribute('data-theme', isNight ? 'night' : 'day');
+      })();
+    </script>
   </head>
   <body>
     <div class="container">
       <div class="header">
         <button id="openModal" class="pin-button" aria-label="Selecionar localização" title="Selecionar localização">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 -960 960 960">
             <path
               d="M480-301q99-80 149.5-154T680-594q0-90-56-148t-144-58q-88 0-144 58t-56 148q0 65 50.5 139T480-301Zm0 101Q339-304 269.5-402T200-594q0-125 78-205.5T480-880q124 0 202 80.5T760-594q0 94-69.5 192T480-200Zm0-320q33 0 56.5-23.5T560-600q0-33-23.5-56.5T480-680q-33 0-56.5 23.5T400-600q0 33 23.5 56.5T480-520ZM200-80v-80h560v80H200Zm280-520Z"
             ></path>
@@ -22,7 +29,7 @@
         </button>
         <div class="location">Carregando...</div>
         <button class="refresh-button" aria-label="Atualizar clima" title="Atualizar clima">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="#e8eaed">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24" viewBox="0 -960 960 960">
             <path
               d="M482-160q-134 0-228-93t-94-227v-7l-64 64-56-56 160-160 160 160-56 56-64-64v7q0 100 70.5 170T482-240q26 0 51-6t49-18l60 60q-38 22-78 33t-82 11Zm278-161L600-481l56-56 64 64v-7q0-100-70.5-170T478-720q-26 0-51 6t-49 18l-60-60q38-22 78-33t82-11q134 0 228 93t94 227v7l64-64 56 56-160 160Z"
             ></path>

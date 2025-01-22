@@ -1,3 +1,58 @@
+[data-theme='day'] {
+  --background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+  --text-color: #2c3e50;
+  --icon-color: #2c3e50;
+  --background-hover: rgb(83 83 83 / 10%);
+  --container-background: rgb(255 255 255 / 20%);
+  --container-shadow: rgb(31 32 46 / 35%);
+  --detail-background: rgb(255 255 255 / 10%);
+
+  /* Modal */
+  --modal-overlay: rgb(0 0 0 / 50%);
+  --modal-background: #fff;
+  --modal-title-color: #000;
+  --modal-button-background: #007bff;
+  --modal-button-text: #fff;
+  --modal-button-hover: #0056b3;
+  --modal-input-border: #ccc;
+
+  --modal-suggestion-background: #fff;
+  --modal-suggestion-text: #000;
+  --modal-suggestion-border: #ccc;
+  --modal-suggestion-hover: #f4f4f4;
+  --modal-suggestion-scrollbar-track: #f1f1f1;
+  --modal-suggestion-scrollbar-thumb: #888;
+  --modal-suggestion-scrollbar-thumb-hover: #555;
+}
+
+[data-theme='night'] {
+  /* background: linear-gradient(steelblue, darkslateblue); */
+  --background: linear-gradient(120deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+  --text-color: #ecf0f1;
+  --icon-color: #f3f3f3;
+  --background-hover: rgb(255 255 255 / 10%);
+  --container-background: rgb(255 255 255 / 20%);
+  --container-shadow: rgb(31 32 46 / 35%);
+  --detail-background: rgb(255 255 255 / 10%);
+
+  /* Modal */
+  --modal-overlay: rgb(0 0 0 / 50%);
+  --modal-background: #fff;
+  --modal-title-color: #000;
+  --modal-button-background: #007bff;
+  --modal-button-text: #fff;
+  --modal-button-hover: #0056b3;
+  --modal-input-border: #ccc;
+
+  --modal-suggestion-background: #fff;
+  --modal-suggestion-text: #000;
+  --modal-suggestion-border: #ccc;
+  --modal-suggestion-hover: #f4f4f4;
+  --modal-suggestion-scrollbar-track: #f1f1f1;
+  --modal-suggestion-scrollbar-thumb: #888;
+  --modal-suggestion-scrollbar-thumb-hover: #555;
+}
+
 * {
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -12,30 +67,26 @@ body {
   transition: all 0.3s ease;
 }
 
-body.day {
-  background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
-  color: #2c3e50;
+body {
+  background: var(--background);
+  color: var(--text-color);
 }
 
-body.night {
-  background: linear-gradient(120deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
-  color: #ecf0f1;
+.refresh-button svg,
+.pin-button svg {
+  fill: var(--icon-color);
 }
 
-/* TODO: ajustar */
-.day .refresh-button svg {
-  fill: black;
-}
-
-.night .refresh-button svg {
-  fill: white;
+.refresh-button:hover,
+.pin-button:hover {
+  background: var(--background-hover);
 }
 
 .container {
-  background: #fff3;
+  background: var(--container-background);
   border-radius: 20px;
-  box-shadow: 0 8px 32px #1f202e5e;
-  width: 90%;
+  box-shadow: 0 8px 32px var(--container-shadow);
+  width: 100%;
   max-width: 400px;
   display: flex;
   flex-direction: column;
@@ -63,18 +114,6 @@ body.night {
   justify-content: center;
   transition: transform 0.3s ease;
   border-radius: 50%;
-}
-
-/* TODO: ajustar */
-.refresh-button:hover,
-.pin-button:hover {
-  background: rgb(83 83 83 / 10%);
-}
-
-/* TODO: ajustar */
-.refresh-button svg,
-.pin-button svg {
-  fill: #2c3e50;
 }
 
 @keyframes spin {
@@ -122,7 +161,7 @@ body.night {
 
 .detail-item {
   padding: 0.5rem;
-  background: hsl(0deg 0% 100% / 10%);
+  background: var(--detail-background);
   border-radius: 10px;
   box-shadow: 1px 1px 0px 0px rgb(0 0 0 / 4%);
 }
