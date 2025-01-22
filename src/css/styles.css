@@ -22,6 +22,7 @@ body.night {
   color: #ecf0f1;
 }
 
+/* TODO: ajustar */
 .day .refresh-button svg {
   fill: black;
 }
@@ -31,21 +32,26 @@ body.night {
 }
 
 .container {
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  padding: 2rem;
+  background: #fff3;
   border-radius: 20px;
-  box-shadow: 0 8px 32px 0 rgba(31, 32, 46, 0.37);
+  box-shadow: 0 8px 32px #1f202e5e;
   width: 90%;
   max-width: 400px;
+  display: flex;
+  flex-direction: column;
   text-align: center;
-  position: relative;
 }
 
-.refresh-button {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  align-items: center;
+  text-align: center;
+}
+
+.refresh-button,
+.pin-button {
   background: transparent;
   border: none;
   cursor: pointer;
@@ -59,8 +65,16 @@ body.night {
   border-radius: 50%;
 }
 
-.refresh-button:hover {
-  background: rgba(255, 255, 255, 0.1);
+/* TODO: ajustar */
+.refresh-button:hover,
+.pin-button:hover {
+  background: rgb(83 83 83 / 10%);
+}
+
+/* TODO: ajustar */
+.refresh-button svg,
+.pin-button svg {
+  fill: #2c3e50;
 }
 
 @keyframes spin {
@@ -79,14 +93,12 @@ body.night {
 
 .weather-icon {
   font-size: 4rem;
-  margin: 1rem 0;
 }
 
 .location {
   font-size: 1.5rem;
-  margin-bottom: 1rem;
   font-weight: 600;
-  padding-right: 2.5rem;
+  max-width: 70%;
 }
 
 .temperature {
@@ -104,11 +116,13 @@ body.night {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
-  margin-top: 2rem;
+  margin-top: 1rem;
+  padding: 1rem;
 }
 
 .detail-item {
   padding: 0.5rem;
-  background: rgba(255, 255, 255, 0.1);
+  background: hsl(0deg 0% 100% / 10%);
   border-radius: 10px;
+  box-shadow: 1px 1px 0px 0px rgb(0 0 0 / 4%);
 }
