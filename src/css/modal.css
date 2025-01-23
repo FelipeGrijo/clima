@@ -98,10 +98,6 @@ span.suggestion-location {
   pointer-events: none;
 }
 
-.suggestion .fi {
-  pointer-events: none;
-}
-
 .suggestions::-webkit-scrollbar {
   width: 8px; /* Largura da barra de rolagem */
 }

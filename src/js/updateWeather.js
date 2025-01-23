@@ -1,4 +1,4 @@
-import getLocation from './getLocation.js';
+import { getLocation } from './getLocation.js';
 import getWeather from './getWeather.js';
 import setTheme from './setTheme.js';
 import { saveToLocalStorage, getFromLocalStorage } from './localStorage.js';

@@ -41,4 +41,4 @@ async function getLocation() {
   }
 }
 
-export default getLocation;
+export { getLocation, formatCountryName };

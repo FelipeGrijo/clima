@@ -1,5 +1,6 @@
 import updateWeather from './updateWeather.js';
 import { saveToLocalStorage } from './localStorage.js';
+import { formatCountryName } from './getLocation.js';
 
 const openModalButton = document.getElementById('openModal');
 const saveModalButton = document.getElementById('saveModal');
@@ -93,7 +94,7 @@ async function searchCities(query) {
     const suggestions = data.results.map((result) => ({
       displayText: result.admin1 ? `${result.name} - ${result.admin1}` : result.name,
       city: result.name || '',
-      country: result.country || '',
+      country: formatCountryName(result.country_code) || result.country || '',
       countryCode: result.country_code || 'xx',
       latitude: result.latitude || '',
       longitude: result.longitude || '',
@@ -107,8 +108,9 @@ async function searchCities(query) {
 }
 
 suggestionsContainer.addEventListener('click', (event) => {
-  if (event.target.classList.contains('suggestion')) {
-    const { name, country, latitude, longitude } = event.target.dataset;
+  const elem = event.target.closest('.suggestion');
+  if (elem) {
+    const { name, country, latitude, longitude } = elem.dataset;
     citySearchInput.value = name;
     citySearchInput.setAttribute('data-country', country);
     coordinatesInput.value = `${latitude},${longitude}`;
