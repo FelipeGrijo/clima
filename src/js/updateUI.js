@@ -1,5 +1,4 @@
-import getWeatherEmoji from './getWeatherEmoji.js';
-import getWeatherDescription from './getWeatherDescription.js';
+import { getWeatherEmoji, getWeatherDescription } from './getWeather.js';
 
 function updateFavicon(emoji) {
   const favicon = document.querySelector('head > link[rel=icon]');

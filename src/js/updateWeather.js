@@ -1,5 +1,5 @@
 import { getLocation } from './getLocation.js';
-import getWeather from './getWeather.js';
+import { getWeather } from './getWeather.js';
 import setTheme from './setTheme.js';
 import { saveToLocalStorage, getFromLocalStorage } from './localStorage.js';
 import updateUI from './updateUI.js';
