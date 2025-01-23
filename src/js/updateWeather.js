@@ -1,11 +1,15 @@
 import { getLocation } from './getLocation.js';
 import { getWeather } from './getWeather.js';
-import setTheme from './setTheme.js';
 import { saveToLocalStorage, getFromLocalStorage } from './localStorage.js';
 import updateUI from './updateUI.js';
 
 const refreshButton = document.querySelector('.refresh-button');
 let isUpdating = false;
+
+function isNightTime() {
+  const hours = new Date().getHours();
+  return hours < 6 || hours > 18;
+}
 
 function setUpdatingState(updating) {
   isUpdating = updating;
@@ -17,7 +21,7 @@ async function updateWeather(useCache = true) {
   if (isUpdating) return;
 
   setUpdatingState(true);
-  const isNight = setTheme();
+  const isNight = isNightTime();
 
   try {
     // Verifica o cache primeiro
