@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="css/modal.css" />
     <title>Clima</title>
     <script>
+      // Define o tema de acordo com a hora
       (() => {
         const hours = new Date().getHours();
         const isNight = hours < 6 || hours > 18;
@@ -67,5 +68,14 @@
     </div>
 
     <script type="module" src="js/main.js"></script>
+    <script>
+      // Adiciona o CSS do Flag Icons após carregar a página
+      window.addEventListener('load', () => {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.3.2/css/flag-icons.min.css';
+        document.head.appendChild(link);
+      });
+    </script>
   </body>
 </html>
