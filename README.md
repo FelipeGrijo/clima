@@ -52,15 +52,15 @@ http://localhost:5173
 
 ## TODO
 
-- [x] Melhorar layout
-- [x] Add botão [pin](https://fonts.google.com/icons?icon.query=pin)
+- [x] Botão [pin](https://fonts.google.com/icons?icon.query=pin)
   - [x] Ao clicar abre modal
   - [x] Usar o [open-meteo](https://open-meteo.com/en/docs/geocoding-api#name=Maca%C3%A9) pra localização. Ex.: [Macaé](https://geocoding-api.open-meteo.com/v1/get?id=3458266)
   - [x] Criar campo de busca, ao buscar nome, preencher com bandeira do país, cidade e estado. Usar idioma do navegador.
   - [x] Add coordenadas como campo adicional opcional
-  - [x] Salvar cidade no localstorage
-  - [ ] ~~Mostrar erros pro usuário, quando a requisição for bloqueada por um adblock e que a localização inicial é aproximado, podendo usar a localização exata no botão de busca.~~
-- [ ] Add gráfico com clima do dia
-- [ ] Add clima pros próximos dias
-- [ ] 100 pontos em tudo no [Lighthouse](https://developer.chrome.com/docs/lighthouse/overview?hl=pt-br)
-- [ ] Webapp
+  - [x] Salvar cidade no localStorage
+- [ ] Mostrar mensagem de erro quando a requisição falhar
+- [ ] Botão pra pegar a localização exata
+- [ ] Gráfico com clima do dia
+- [ ] Previsão do clima pros próximos dias
+- [ ] PWA
+- [ ] 100 pontos no [Lighthouse](https://developer.chrome.com/docs/lighthouse/overview?hl=pt-br)

@@ -6,15 +6,15 @@ import updateUI from './updateUI.js';
 const refreshButton = document.querySelector('.refresh-button');
 let isUpdating = false;
 
-function isNightTime() {
-  const hours = new Date().getHours();
-  return hours < 6 || hours > 18;
-}
-
 function setUpdatingState(updating) {
   isUpdating = updating;
   refreshButton.classList.toggle('updating', updating);
   refreshButton.disabled = updating;
+}
+
+function isNightTime() {
+  const hours = new Date().getHours();
+  return hours < 6 || hours > 18;
 }
 
 async function updateWeather(useCache = true) {
