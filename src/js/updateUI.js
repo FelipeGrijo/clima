@@ -15,7 +15,10 @@ function updateUI({ locationData, weather, isNight }) {
   const weatherDescription = getWeatherDescription(weather.weather_code);
 
   // Note: Retorna o valor que não for nulo, vazio ou indefinido. Mostrará a cidade e o país, separados por vírgula ou somente um dos dois, caso um deles não exista.
-  const displayText = [locationData.city, locationData.country].filter(Boolean).join(', ');
+  const locations = [locationData.city, locationData.country].filter(Boolean);
+  // Remove locais duplicados
+  const uniqueLocations = [...new Set(locations)];
+  const displayText = uniqueLocations.join(', ');
 
   document.querySelector('.location').textContent = displayText;
   document.querySelector('.temperature').textContent = `${temperature}°C`;

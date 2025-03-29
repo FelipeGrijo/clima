@@ -17,7 +17,7 @@ openModalButton.addEventListener('click', () => {
 
 saveModalButton.addEventListener('click', () => {
   modalOverlay.classList.remove('active');
-  const city = citySearchInput.value.trim();
+  const city = citySearchInput.value.trim().split(',')[0]; // Salva só o nome da cidade
   const country = citySearchInput.getAttribute('data-country').trim();
   const [latitude, longitude] = coordinatesInput.value.split(',').map((coord) => coord.trim());
 
@@ -93,7 +93,7 @@ async function searchCities(query) {
 
     const suggestions = data.results.map((result) => ({
       displayText: result.admin1 ? `${result.name} - ${result.admin1}` : result.name,
-      city: result.name || '',
+      city: result.name === result.country ? formatCountryName(result.country_code) : result.name,
       country: formatCountryName(result.country_code) || result.country || '',
       countryCode: result.country_code || 'xx',
       latitude: result.latitude || '',
