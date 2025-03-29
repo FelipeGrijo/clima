@@ -30,12 +30,13 @@ function updateUI({ locationData, weather, isNight }) {
   updateTitle({ temperature, weatherDescription });
   updateFavicon(emoji);
 
-  const citySearchInput = document.getElementById('citySearch');
+  const citySearchInput = document.getElementById('city-search');
   const coordinatesInput = document.getElementById('coordinates');
+  const countryInput = document.getElementById('country');
 
   if (citySearchInput.value === '') {
     citySearchInput.value = displayText;
-    citySearchInput.setAttribute('data-country', locationData.country);
+    countryInput.value = locationData.country;
   }
 
   if (coordinatesInput.value === '') {

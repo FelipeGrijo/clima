@@ -2,12 +2,12 @@ import updateWeather from './updateWeather.js';
 import { saveToLocalStorage } from './localStorage.js';
 import { formatCountryName } from './getLocation.js';
 
-const openModalButton = document.getElementById('openModal');
-const saveModalButton = document.getElementById('saveModal');
-const modalOverlay = document.getElementById('modalOverlay');
-const citySearchInput = document.getElementById('citySearch');
+const openModalButton = document.getElementById('open-modal');
+const saveModalButton = document.getElementById('btn-save');
+const modalOverlay = document.getElementById('modal-overlay');
+const citySearchInput = document.getElementById('city-search');
 const coordinatesInput = document.getElementById('coordinates');
-const openGoogleMapsButton = document.getElementById('openGoogleMaps');
+const openGoogleMapsButton = document.getElementById('btn-open-googlemaps');
 const suggestionsContainer = document.getElementById('suggestions');
 
 openModalButton.addEventListener('click', () => {
@@ -15,11 +15,16 @@ openModalButton.addEventListener('click', () => {
   citySearchInput.focus();
 });
 
-saveModalButton.addEventListener('click', () => {
+saveModalButton.addEventListener('click', (event) => {
+  event.preventDefault();
+
   modalOverlay.classList.remove('active');
-  const city = citySearchInput.value.trim().split(',')[0]; // Salva só o nome da cidade
-  const country = citySearchInput.getAttribute('data-country').trim();
-  const [latitude, longitude] = coordinatesInput.value.split(',').map((coord) => coord.trim());
+
+  const form = event.target.closest('form');
+  const formData = Object.fromEntries(new FormData(form).entries());
+  const city = formData.city.trim().split(',')[0]; // Salva só o nome da cidade
+  const country = formData.country.trim();
+  const [latitude, longitude] = formData.coordinates.split(',').map((coord) => coord.trim());
 
   saveToLocalStorage({
     locationData: {
@@ -104,9 +109,11 @@ async function searchCities(query) {
 suggestionsContainer.addEventListener('click', (event) => {
   const elem = event.target.closest('.suggestion');
   if (elem) {
+    const countryInput = document.getElementById('country');
     const { name, country, latitude, longitude } = elem.dataset;
+
     citySearchInput.value = name;
-    citySearchInput.setAttribute('data-country', country);
+    countryInput.value = country;
     coordinatesInput.value = `${latitude},${longitude}`;
 
     clearSuggestions();

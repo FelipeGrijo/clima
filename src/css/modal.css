@@ -20,54 +20,35 @@
 
 .modal {
   background: var(--modal-background);
-  padding: 1rem;
+  padding: 1.5rem;
   border-radius: 10px;
-  text-align: center;
   opacity: 1;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-.modal h3 {
+.modal-title {
+  color: var(--modal-title-color);
+  font-size: 1.5em;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  display: block;
+  text-align: center;
+}
+
+.modal label {
   color: var(--modal-title-color);
 }
 
-.modal button {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: var(--modal-button-background);
-  color: var(--modal-button-text);
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.modal button:hover {
-  background-color: var(--modal-button-hover);
-}
-
-.modal input {
-  width: calc(100% - 20px);
-  padding: 8px;
-  margin: 10px 0;
+.modal input[type='text'] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 1rem;
   border: 1px solid var(--modal-input-border);
   border-radius: 5px;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
+.search-container {
+  position: relative;
 }
 
 .suggestions {
@@ -81,12 +62,14 @@
   z-index: 1;
   margin-top: -10px;
   color: var(--modal-suggestion-text);
+  display: none;
 }
 
 .suggestion {
   padding: 10px;
   cursor: pointer;
   display: flex;
+  gap: 10px;
 }
 
 .suggestion:hover {
@@ -98,23 +81,24 @@ span.suggestion-location {
   pointer-events: none;
 }
 
+/* Largura da barra de rolagem */
 .suggestions::-webkit-scrollbar {
-  width: 8px; /* Largura da barra de rolagem */
+  width: 8px;
 }
 
+/* Cor do fundo da barra de rolagem */
 .suggestions::-webkit-scrollbar-track {
-  /* Cor do fundo da barra de rolagem */
   background: var(--modal-suggestion-scrollbar-track);
 }
 
+/* Cor da barra de rolagem */
 .suggestions::-webkit-scrollbar-thumb {
-  /* Cor da barra de rolagem */
   background: var(--modal-suggestion-scrollbar-thumb);
-  border-radius: 8px; /* Bordas arredondadas */
+  border-radius: 8px;
 }
 
+/* Cor da barra de rolagem ao passar o mouse */
 .suggestions::-webkit-scrollbar-thumb:hover {
-  /* Cor da barra de rolagem ao passar o mouse */
   background: var(--modal-suggestion-scrollbar-thumb-hover);
 }
 
@@ -129,4 +113,51 @@ span.suggestion-location {
   fill: black;
   animation: spin 1s linear infinite;
   pointer-events: none;
+}
+
+.modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+@media (max-width: 560px) {
+  .modal-actions {
+    flex-direction: column;
+  }
+}
+
+.btn {
+  padding: 6px 10px;
+  font-size: 16px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    border-color 0.2s;
+}
+
+.btn-primary {
+  background-color: var(--modal-button-background);
+  color: var(--modal-button-text);
+  border-color: var(--modal-button-background);
+}
+
+.btn-primary:hover {
+  background-color: var(--modal-button-hover);
+  border-color: var(--modal-button-hover);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--modal-button-background);
+  border-color: var(--modal-button-background);
+}
+
+.btn-secondary:hover {
+  background-color: var(--modal-button-background-light);
+  border-color: var(--modal-button-background);
 }

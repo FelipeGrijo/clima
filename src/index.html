@@ -23,7 +23,7 @@
   <body>
     <div class="container">
       <div class="header">
-        <button id="openModal" class="pin-button" aria-label="Selecionar localização" title="Selecionar localização">
+        <button id="open-modal" class="pin-button" aria-label="Selecionar localização" title="Selecionar localização">
           <svg width="24" height="24">
             <use href="./assets/icons.svg#location"></use>
           </svg>
@@ -50,16 +50,28 @@
       </div>
     </div>
 
-    <div id="modalOverlay" class="modal-overlay">
-      <div class="modal">
-        <h3>Procurar Local</h3>
-        <div style="position: relative">
-          <input type="text" id="citySearch" placeholder="Cidade" spellcheck="false" />
-          <div id="suggestions" class="suggestions" style="display: none"></div>
-        </div>
-        <input type="text" id="coordinates" placeholder="(Opcional) Coordenadas. Ex: -22.91216,-43.23014 (latitude,longitude)" spellcheck="false" />
-        <button id="openGoogleMaps">Abrir no Google Maps</button>
-        <button id="saveModal">Salvar</button>
+    <div id="modal-overlay" class="modal-overlay">
+      <div class="modal" role="dialog" aria-labelledby="modal-title" aria-modal="true">
+        <span id="modal-title" class="modal-title">Procurar Local</span>
+
+        <form id="location-form">
+          <div class="search-container">
+            <label for="city-search">Nome da Cidade</label>
+            <input type="text" id="city-search" name="city" placeholder="Rio de Janeiro" spellcheck="false" />
+            <input type="hidden" id="country" name="country" />
+            <div id="suggestions" class="suggestions"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="coordinates">Coordenadas (Latitude,Longitude)</label>
+            <input type="text" id="coordinates" name="coordinates" placeholder="-22.91,-43.23" spellcheck="false" />
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" id="btn-open-googlemaps" class="btn btn-secondary">Abrir no Google Maps</button>
+            <button type="submit" id="btn-save" class="btn btn-primary">Salvar</button>
+          </div>
+        </form>
       </div>
     </div>
 

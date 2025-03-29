@@ -1,4 +1,4 @@
-[data-theme='day'] {
+:root {
   --background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
   --text-color: #2c3e50;
   --icon-color: #2c3e50;
@@ -12,6 +12,7 @@
   --modal-background: #fff;
   --modal-title-color: #000;
   --modal-button-background: #007bff;
+  --modal-button-background-light: rgb(0 123 255 / 10%);
   --modal-button-text: #fff;
   --modal-button-hover: #0056b3;
   --modal-input-border: #ccc;
@@ -26,31 +27,10 @@
 }
 
 [data-theme='night'] {
-  /* background: linear-gradient(steelblue, darkslateblue); */
   --background: linear-gradient(120deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
   --text-color: #ecf0f1;
   --icon-color: #f3f3f3;
   --background-hover: rgb(255 255 255 / 10%);
-  --container-background: rgb(255 255 255 / 20%);
-  --container-shadow: rgb(31 32 46 / 35%);
-  --detail-background: rgb(255 255 255 / 10%);
-
-  /* Modal */
-  --modal-overlay: rgb(0 0 0 / 50%);
-  --modal-background: #fff;
-  --modal-title-color: #000;
-  --modal-button-background: #007bff;
-  --modal-button-text: #fff;
-  --modal-button-hover: #0056b3;
-  --modal-input-border: #ccc;
-
-  --modal-suggestion-background: #fff;
-  --modal-suggestion-text: #000;
-  --modal-suggestion-border: #ccc;
-  --modal-suggestion-hover: #f4f4f4;
-  --modal-suggestion-scrollbar-track: #f1f1f1;
-  --modal-suggestion-scrollbar-thumb: #888;
-  --modal-suggestion-scrollbar-thumb-hover: #555;
 }
 
 * {
@@ -59,27 +39,28 @@
 }
 
 body {
+  background: var(--background);
+  color: var(--text-color);
   margin: 0;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: all 0.3s ease;
-}
-
-body {
-  background: var(--background);
-  color: var(--text-color);
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
 }
 
 .refresh-button svg,
 .pin-button svg {
   fill: var(--icon-color);
+  transition: fill 0.3s ease;
 }
 
 .refresh-button:hover,
 .pin-button:hover {
   background: var(--background-hover);
+  transition: background 0.2s ease;
 }
 
 .container {
@@ -114,6 +95,7 @@ body {
   justify-content: center;
   transition: transform 0.3s ease;
   border-radius: 50%;
+  min-width: 40px;
 }
 
 @keyframes spin {
@@ -137,7 +119,6 @@ body {
 .location {
   font-size: 1.5rem;
   font-weight: 600;
-  max-width: 70%;
 }
 
 .temperature {
