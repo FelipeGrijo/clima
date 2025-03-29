@@ -5,10 +5,8 @@ import { ViteMinifyPlugin } from 'vite-plugin-minify';
 
 export default defineConfig({
   root: `${import.meta.dirname}/src`,
-  plugins: [
-    // input https://www.npmjs.com/package/html-minifier-terser options
-    ViteMinifyPlugin({}),
-  ],
+  publicDir: `${import.meta.dirname}/public`,
+  plugins: [ViteMinifyPlugin({})],
   build: {
     outDir: '../dist',
     assetsDir: './',
